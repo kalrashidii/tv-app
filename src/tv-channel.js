@@ -1,8 +1,8 @@
-
+// import stuff
 import { LitElement, html, css } from 'lit';
 
 export class TvChannel extends LitElement {
-
+  // defaults
   constructor() {
     super();
     this.title = '';
@@ -11,11 +11,11 @@ export class TvChannel extends LitElement {
     this.video = '';
     this.time = '';
   }
-
+  // convention I enjoy using to define the tag's name
   static get tag() {
     return 'tv-channel';
   }
-
+  // LitElement convention so we update render() when values change
   static get properties() {
     return {
       title: { type: String },
@@ -25,7 +25,7 @@ export class TvChannel extends LitElement {
       time: { type: String }
     };
   }
- 
+  // LitElement convention for applying styles JUST to our element
   static get styles() {
     return css`
       :host {
@@ -92,34 +92,22 @@ export class TvChannel extends LitElement {
 
     `;
   }
-  
+  // LitElement rendering template of your element
   render() {
     return html`
       <div class="container">
         <div class="tags">
-          <span id="tag"></span>
-          <script>
-            function convert(t) {
-              const dt = new Date(t);
-              const hr = dt.getUTCHours();
-              const m = "0" + dt.getUTCMinutes();
-          
-              return hr + ':' + m.substr(-2)
-            }
-
-            document.getElementById("tag").innerHTML = convert("${this.time}");
-          </script>
+          <span id="tag">${this.time}</span>
         </div>
         <div class="information">
           <p class="title">${this.title}</p>
           <p class="description">${this.presenter}</p>
-          <p>${this.time}</p>
           <slot></slot>
         </div>
-      </div>  
+      </div>
       `;
   }
 }
 
-
+// tell the browser about our tag and class it should run when it sees it
 customElements.define(TvChannel.tag, TvChannel);
